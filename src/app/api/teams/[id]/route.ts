@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
 import { ACTIVE_DISPATCH_STATUSES } from '@/lib/dispatch'
 
 const TEAM_STATUSES = ['available', 'unavailable', 'assigned']
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 const EDITABLE_FIELDS = [
   'team_name',
@@ -28,6 +32,7 @@ export async function PATCH(
       if (field in body) update[field] = body[field]
     }
 
+<<<<<<< HEAD
     if ('status' in update) {
       if (!TEAM_STATUSES.includes(update.status as string)) {
         return NextResponse.json({ error: `Invalid status: ${update.status}` }, { status: 400 })
@@ -48,6 +53,8 @@ export async function PATCH(
       return NextResponse.json({ error: 'Nothing to update' }, { status: 400 })
     }
 
+=======
+>>>>>>> origin/main
     const { data, error } = await supabase
       .from('rescue_teams')
       .update(update)
@@ -56,8 +63,12 @@ export async function PATCH(
       .single()
 
     if (error) {
+<<<<<<< HEAD
       const missing = error.code === 'PGRST116'
       return NextResponse.json({ error: missing ? 'Team not found' : error.message }, { status: missing ? 404 : 500 })
+=======
+      return NextResponse.json({ error: error.message }, { status: 500 })
+>>>>>>> origin/main
     }
 
     return NextResponse.json(data)
@@ -72,6 +83,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+<<<<<<< HEAD
     const { data: active } = await supabase
       .from('dispatches')
       .select('id')
@@ -81,6 +93,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'This team is on a mission and cannot be deleted.' }, { status: 409 })
     }
 
+=======
+>>>>>>> origin/main
     const { error } = await supabase.from('rescue_teams').delete().eq('id', params.id)
 
     if (error) {

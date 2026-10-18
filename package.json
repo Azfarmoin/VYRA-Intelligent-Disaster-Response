@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "vyra",
+=======
+  "name": "resqnet",
+>>>>>>> origin/main
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,12 +11,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+<<<<<<< HEAD
     "test": "tsx --test tests/triage.test.ts tests/api.test.ts tests/ops.test.ts tests/admin.test.ts",
     "dev:demo": "cross-env VYRA_DATA_MODE=demo next dev",
     "db:setup": "node scripts/setup-db.js",
     "db:seed": "node scripts/setup-db.js --seed-only",
     "db:seed:generate": "tsx scripts/generate-seed-30.mts",
     "db:seed:generate:80": "tsx scripts/generate-seed-sql.ts"
+=======
+    "test": "tsx --test tests/triage.test.ts tests/api.test.ts",
+    "dev:demo": "cross-env VYRA_DATA_MODE=demo next dev"
+>>>>>>> origin/main
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
@@ -26,6 +35,10 @@
     "react-leaflet": "^4.2.1",
     "tailwind-merge": "^2.3.0",
     "zod": "^3.24.1"
+<<<<<<< HEAD
+=======
+    "tailwind-merge": "^2.3.0"
+>>>>>>> origin/main
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",
@@ -36,10 +49,21 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
+<<<<<<< HEAD
     "pg": "^8.23.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "tsx": "^4.19.2",
+=======
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "tsx": "^4.19.2",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8.4.38",
+    "supabase": "^2.121.0",
+    "tailwindcss": "^3.4.3",
+>>>>>>> origin/main
     "typescript": "^5.4.5"
   }
 }

@@ -19,7 +19,11 @@ Run these in **Supabase → SQL Editor**, in order:
    - the `infinite recursion detected in policy for relation "profiles"` error,
    - `reporter_id` being required, which blocked anonymous reports,
    - the old 0–100 cap on `priority_score` (Stage 6 scores can be higher, e.g. 137).
+<<<<<<< HEAD
 2. **`supabase/seed/vyra_full_seed.sql`** (optional): the full simulated demo data plus six sign-in accounts, including an administrator. Re-running it only replaces the demo rows and accounts. See `SETUP_GUIDE.md`.
+=======
+2. **`supabase/migrations/003_demo_seed.sql`** (optional): simulated demo data. Re-running it only replaces the demo rows.
+>>>>>>> origin/main
 
 `migrations/002`, `004` and `005` are earlier step-by-step versions of the same changes. You don't need them if you run the complete schema.
 

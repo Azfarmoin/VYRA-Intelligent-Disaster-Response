@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
 import { RESOURCE_TYPES } from '@/lib/matching'
 
 const STATUSES = ['available', 'in_use', 'maintenance']
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 const EDITABLE_FIELDS = ['resource_type', 'name', 'quantity', 'team_id', 'status', 'notes']
 
@@ -18,6 +22,7 @@ export async function PATCH(
       if (field in body) update[field] = body[field]
     }
 
+<<<<<<< HEAD
     if ('quantity' in update && (!Number.isInteger(update.quantity) || (update.quantity as number) < 0)) {
       return NextResponse.json({ error: 'quantity must be a whole number, 0 or more' }, { status: 400 })
     }
@@ -34,6 +39,8 @@ export async function PATCH(
       return NextResponse.json({ error: 'Nothing to update' }, { status: 400 })
     }
 
+=======
+>>>>>>> origin/main
     const { data, error } = await supabase
       .from('resources')
       .update(update)
@@ -42,8 +49,12 @@ export async function PATCH(
       .single()
 
     if (error) {
+<<<<<<< HEAD
       const missing = error.code === 'PGRST116'
       return NextResponse.json({ error: missing ? 'Resource not found' : error.message }, { status: missing ? 404 : 500 })
+=======
+      return NextResponse.json({ error: error.message }, { status: 500 })
+>>>>>>> origin/main
     }
 
     return NextResponse.json(data)
@@ -58,10 +69,13 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+<<<<<<< HEAD
     const { data: current } = await supabase.from('resources').select('status').eq('id', params.id).maybeSingle()
     if (current?.status === 'in_use') {
       return NextResponse.json({ error: 'These supplies are in use on a mission and cannot be deleted.' }, { status: 409 })
     }
+=======
+>>>>>>> origin/main
     const { error } = await supabase.from('resources').delete().eq('id', params.id)
 
     if (error) {

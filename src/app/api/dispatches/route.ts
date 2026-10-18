@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 import { matchTeamsToCase } from '@/lib/matching'
 import { ACTIVE_DISPATCH_STATUSES, DISPATCH_SELECT } from '@/lib/dispatch'
 

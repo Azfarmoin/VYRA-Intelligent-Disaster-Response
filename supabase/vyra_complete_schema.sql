@@ -1,5 +1,9 @@
 -- =============================================================================
+<<<<<<< HEAD
 -- VYRA (Vulnerability, Yielded Response & Assistance) - complete database schema (Stages 1-6)
+=======
+-- VYRA - complete database schema (Stages 1-6)
+>>>>>>> origin/main
 --
 -- Based on the original supabase/schema.sql, extended for:
 --   Stage 4 - structured emergency reports
@@ -9,7 +13,11 @@
 -- Works on BOTH a brand-new Supabase project and the existing database:
 -- everything is "create if missing / add if missing", so it is safe to re-run.
 -- It replaces migrations 002, 004 and 005. Run it once in the SQL Editor, then
+<<<<<<< HEAD
 -- (optionally) run seed/vyra_full_seed.sql for the full simulated demo data and accounts.
+=======
+-- (optionally) run migrations/003_demo_seed.sql for simulated demo data.
+>>>>>>> origin/main
 -- =============================================================================
 
 
@@ -35,7 +43,11 @@ EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN CREATE TYPE resource_status AS ENUM ('available', 'in_use', 'maintenance');
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
+<<<<<<< HEAD
 DO $$ BEGIN CREATE TYPE dispatch_status AS ENUM ('pending', 'en_route', 'on_scene', 'completed', 'cancelled');
+=======
+DO $$ BEGIN CREATE TYPE dispatch_status AS ENUM ('pending', 'en_route', 'on_scene', 'completed');
+>>>>>>> origin/main
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN CREATE TYPE shelter_status AS ENUM ('open', 'full', 'closed');
@@ -137,7 +149,11 @@ CREATE TABLE IF NOT EXISTS report_events (
 CREATE TABLE IF NOT EXISTS blocked_roads (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   description TEXT NOT NULL,
+<<<<<<< HEAD
   reason TEXT NOT NULL DEFAULT 'other' CHECK (reason IN ('flooding', 'debris', 'collapse', 'structural', 'other')),
+=======
+  reason TEXT NOT NULL DEFAULT 'other' CHECK (reason IN ('flooding', 'debris', 'collapse', 'other')),
+>>>>>>> origin/main
   area TEXT,
   path JSONB NOT NULL,                       -- [[lat, lng], [lat, lng], ...]
   verified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -229,6 +245,7 @@ ALTER TABLE emergency_reports
   ADD CONSTRAINT emergency_reports_can_evacuate_check CHECK (can_evacuate IN ('yes', 'no', 'unknown')) NOT VALID;
 
 
+<<<<<<< HEAD
 -- Blocked-road reasons: 'structural' (cracked bridges, damaged embankments) is allowed too.
 -- Replaces the older 4-value rule on existing databases; safe to re-run.
 DO $$
@@ -245,6 +262,8 @@ ALTER TABLE blocked_roads
   ADD CONSTRAINT blocked_roads_reason_check CHECK (reason IN ('flooding', 'debris', 'collapse', 'structural', 'other'));
 
 
+=======
+>>>>>>> origin/main
 -- -----------------------------------------------------------------------------
 -- 5. Indexes
 -- -----------------------------------------------------------------------------

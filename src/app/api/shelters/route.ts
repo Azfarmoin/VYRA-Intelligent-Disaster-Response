@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 // GET all shelters
 export async function GET(request: NextRequest) {
@@ -24,6 +28,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
+<<<<<<< HEAD
     if (!String(body.name ?? '').trim()) {
       return NextResponse.json({ error: 'name is required' }, { status: 400 })
     }
@@ -49,6 +54,19 @@ export async function POST(request: NextRequest) {
         current_occupancy: occupancy,
         contact_number: body.contact_number || null,
         status: capacity != null && occupancy >= capacity ? 'full' : 'open'
+=======
+    const { data, error } = await supabase
+      .from('shelters')
+      .insert({
+        name: body.name,
+        location_lat: body.location_lat || null,
+        location_lng: body.location_lng || null,
+        address: body.address,
+        capacity: body.capacity,
+        current_occupancy: body.current_occupancy || 0,
+        contact_number: body.contact_number,
+        status: 'open'
+>>>>>>> origin/main
       })
       .select()
       .single()

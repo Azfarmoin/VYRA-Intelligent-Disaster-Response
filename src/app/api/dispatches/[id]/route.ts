@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 import {
   ACTIVE_DISPATCH_STATUSES as ACTIVE,
   DISPATCH_SELECT,

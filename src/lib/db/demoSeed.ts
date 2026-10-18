@@ -1,9 +1,16 @@
 // SIMULATED DATA ONLY - an urban flooding scenario in Karachi for demos and tests.
+<<<<<<< HEAD
 // Mirrors supabase/seed/vyra_full_seed.sql. Names and numbers are fictional.
 
 import { AREAS, nearestArea } from '../constants'
 import { hasLifeThreat } from '../triage'
 import { SHELTER_DEFS, TEAM_DEFS } from './demoOpsSeed'
+=======
+// Mirrors supabase/migrations/003_demo_seed.sql. Names and numbers are fictional.
+
+import { nearestArea } from '../constants'
+import { hasLifeThreat } from '../triage'
+>>>>>>> origin/main
 import type { BlockedRoad, NewReport, RescueTeam, Shelter } from '../types'
 
 type SeedReport = Partial<NewReport> & { minutesAgo: number; resolvedMinutesAgo?: number; location_lat: number; location_lng: number }
@@ -72,6 +79,7 @@ const reports: SeedReport[] = [
   },
 ]
 
+<<<<<<< HEAD
 
 // ---- Generated scenario data -------------------------------------------------------------
 // A deterministic generator (same data every start) that widens the hand-written cases above
@@ -186,6 +194,12 @@ const ago = (min: number, now: number) => new Date(now - min * 60_000).toISOStri
 
 export function demoReports(now = Date.now()) {
   return [...reports, ...generatedReports()].map(({ minutesAgo, resolvedMinutesAgo, ...r }, i) => {
+=======
+const ago = (min: number, now: number) => new Date(now - min * 60_000).toISOString()
+
+export function demoReports(now = Date.now()) {
+  return reports.map(({ minutesAgo, resolvedMinutesAgo, ...r }, i) => {
+>>>>>>> origin/main
     const created = ago(minutesAgo, now)
     const row = {
       reporter_id: null,
@@ -218,6 +232,7 @@ export function demoReports(now = Date.now()) {
   })
 }
 
+<<<<<<< HEAD
 
 export const demoShelters: Shelter[] = SHELTER_DEFS.map((s) => ({
   id: s.id, name: s.name, location_lat: s.location_lat, location_lng: s.location_lng, address: s.address, area: s.area,
@@ -232,15 +247,40 @@ export const demoTeams: RescueTeam[] = TEAM_DEFS.map((t) => ({
 let n = 0
 const id = () => `10000000-0000-4000-8000-${String(++n).padStart(12, '0')}`
 
+=======
+let n = 0
+const id = () => `10000000-0000-4000-8000-${String(++n).padStart(12, '0')}`
+
+export const demoShelters: Shelter[] = [
+  { id: id(), name: 'Govt. Boys School Shelter (Lyari)', location_lat: 24.874, location_lng: 66.999, address: null, area: 'Lyari', capacity: 300, current_occupancy: 210, services: ['food', 'water', 'medical'], status: 'open', verified: true },
+  { id: id(), name: 'Community Hall Gulshan', location_lat: 24.918, location_lng: 67.089, address: null, area: 'Gulshan-e-Iqbal', capacity: 150, current_occupancy: 150, services: ['food', 'water'], status: 'full', verified: true },
+  { id: id(), name: 'Malir Relief Camp', location_lat: 24.901, location_lng: 67.19, address: null, area: 'Malir', capacity: 500, current_occupancy: 180, services: ['food', 'water', 'medical', 'power'], status: 'open', verified: true },
+  { id: id(), name: 'Korangi Sports Complex', location_lat: 24.827, location_lng: 67.122, address: null, area: 'Korangi', capacity: 400, current_occupancy: 90, services: ['water', 'power'], status: 'open', verified: true },
+  // Unverified - must NOT appear on the responder map.
+  { id: id(), name: 'Rumoured shelter at mosque', location_lat: 24.945, location_lng: 66.995, address: null, area: 'Orangi', capacity: null, current_occupancy: 0, services: [], status: 'open', verified: false },
+]
+
+export const demoTeams: RescueTeam[] = [
+  { id: id(), team_name: 'Boat Team Alpha', team_type: 'boat', capabilities: ['water rescue'], current_location_lat: 24.865, current_location_lng: 66.998, area: 'Lyari', status: 'assigned', verified: true },
+  { id: id(), team_name: 'Medical Unit 3', team_type: 'medical', capabilities: ['first aid', 'ambulance'], current_location_lat: 24.86, current_location_lng: 67.025, area: 'Saddar', status: 'available', verified: true },
+  { id: id(), team_name: 'Search & Rescue Bravo', team_type: 'search_rescue', capabilities: ['collapse rescue'], current_location_lat: 24.83, current_location_lng: 67.125, area: 'Korangi', status: 'available', verified: true },
+  { id: id(), team_name: 'Boat Team Charlie', team_type: 'boat', capabilities: ['water rescue'], current_location_lat: 24.892, current_location_lng: 67.195, area: 'Malir', status: 'available', verified: true },
+  { id: id(), team_name: 'Logistics Truck 7', team_type: 'logistics', capabilities: ['supplies'], current_location_lat: 24.923, current_location_lng: 67.09, area: 'Gulshan-e-Iqbal', status: 'unavailable', verified: true },
+]
+
+>>>>>>> origin/main
 export const demoRoadBlocks: BlockedRoad[] = [
   { id: id(), description: 'Lyari Expressway underpass flooded', reason: 'flooding', area: 'Lyari', path: [[24.862, 66.988], [24.866, 66.995], [24.87, 67.001]], verified: true },
   { id: id(), description: 'Korangi Road submerged near Qayyumabad', reason: 'flooding', area: 'Korangi', path: [[24.836, 67.088], [24.834, 67.1], [24.832, 67.11]], verified: true },
   { id: id(), description: 'Debris on Malir River bridge approach', reason: 'debris', area: 'Malir', path: [[24.885, 67.18], [24.888, 67.186]], verified: true },
+<<<<<<< HEAD
   { id: id(), description: 'Landhi 89 stop road under 1 m of water', reason: 'flooding', area: 'Landhi', path: [[24.846, 67.19], [24.848, 67.202]], verified: true },
   { id: id(), description: 'Orangi nullah bridge closed, structure cracked', reason: 'structural', area: 'Orangi', path: [[24.947, 66.985], [24.949, 66.992]], verified: true },
   { id: id(), description: 'Fallen trees on Sharae Faisal service lane', reason: 'debris', area: 'Saddar', path: [[24.858, 67.03], [24.862, 67.036]], verified: true },
   { id: id(), description: 'Keamari Port Road waterlogged', reason: 'flooding', area: 'Keamari', path: [[24.82, 66.97], [24.826, 66.98]], verified: true },
   { id: id(), description: 'Gulshan Block 7 underpass flooded', reason: 'flooding', area: 'Gulshan-e-Iqbal', path: [[24.918, 67.085], [24.922, 67.092]], verified: true },
+=======
+>>>>>>> origin/main
   // Unverified - hidden from the map.
   { id: id(), description: 'Possible block on University Road', reason: 'other', area: 'Gulshan-e-Iqbal', path: [[24.93, 67.1], [24.935, 67.11]], verified: false },
 ]

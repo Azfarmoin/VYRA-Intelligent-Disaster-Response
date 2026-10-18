@@ -83,6 +83,7 @@ export function usePolledReports(fetcher: (q: Record<string, string | undefined>
   return { reports: data?.reports || [], summary: data?.summary || null, mode: data?.mode, error, loading, lastUpdated, reload: load }
 }
 
+<<<<<<< HEAD
 // Palette-driven. Fills carry navy text (contrast >= 4.8:1); low urgency uses a tint + dark green text.
 export const PRIORITY_STYLES: Record<Priority, { color: string; badge: string; ring: string; size: number }> = {
   critical: { color: '#DF776E', badge: 'bg-critical text-ink-900', ring: 'ring-critical', size: 30 },
@@ -97,6 +98,21 @@ export const STATUS_STYLES: Record<Status, string> = {
   assigned: 'bg-primary-100 text-primary-800',
   resolved: 'bg-success-700 text-white',
   cancelled: 'bg-sand-200 text-ink-600',
+=======
+export const PRIORITY_STYLES: Record<Priority, { color: string; badge: string; ring: string; size: number }> = {
+  critical: { color: '#DC2626', badge: 'bg-red-600 text-white', ring: 'ring-red-500', size: 30 },
+  high: { color: '#EA580C', badge: 'bg-orange-500 text-white', ring: 'ring-orange-400', size: 26 },
+  medium: { color: '#CA8A04', badge: 'bg-yellow-400 text-yellow-950', ring: 'ring-yellow-400', size: 22 },
+  low: { color: '#2563EB', badge: 'bg-blue-600 text-white', ring: 'ring-blue-400', size: 18 },
+}
+
+export const STATUS_STYLES: Record<Status, string> = {
+  pending: 'bg-gray-800 text-white',
+  investigating: 'bg-indigo-100 text-indigo-800',
+  assigned: 'bg-teal-100 text-teal-800',
+  resolved: 'bg-green-100 text-green-800',
+  cancelled: 'bg-gray-200 text-gray-600',
+>>>>>>> origin/main
 }
 
 export function formatWait(minutes?: number) {

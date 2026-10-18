@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 // GET all route hazards
 export async function GET(request: NextRequest) {

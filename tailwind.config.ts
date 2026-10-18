@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss"
 
+<<<<<<< HEAD
 // VYRA palette: sand paper, harbour navy ink, coral action, amber warning, sea-green success, rose critical.
+=======
+>>>>>>> origin/main
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,6 +13,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
+<<<<<<< HEAD
       fontFamily: {
         sans: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'Georgia', 'serif'],
@@ -35,6 +39,21 @@ const config: Config = {
       boxShadow: {
         lift: '0 1px 2px rgb(24 43 58 / 0.06), 0 8px 18px -6px rgb(24 43 58 / 0.14), 0 28px 48px -28px rgb(24 43 58 / 0.28)',
         pop: '0 2px 4px rgb(24 43 58 / 0.08), 0 18px 32px -10px rgb(24 43 58 / 0.22), 0 40px 70px -30px rgb(24 43 58 / 0.35)',
+=======
+      colors: {
+        primary: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+        },
+>>>>>>> origin/main
       },
     },
   },

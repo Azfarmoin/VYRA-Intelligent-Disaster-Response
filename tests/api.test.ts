@@ -110,6 +110,7 @@ test('resolving a case removes it from the triage queue', async () => {
 
 test('GET /api/map/layers returns only verified, active layers', async () => {
   const body = await (await layers.GET(req('/api/map/layers'))).json()
+<<<<<<< HEAD
   assert.ok(body.shelters.length >= 4)
   assert.ok(body.shelters.every((s: { verified: boolean }) => s.verified))
   assert.ok(!body.shelters.some((s: { name: string }) => /Rumoured/.test(s.name)))
@@ -117,4 +118,9 @@ test('GET /api/map/layers returns only verified, active layers', async () => {
   assert.ok(body.teams.every((t: { status: string }) => t.status !== 'unavailable'))
   assert.ok(body.roadBlocks.length >= 3)
   assert.ok(body.roadBlocks.every((r: { verified: boolean }) => r.verified))
+=======
+  assert.equal(body.shelters.length, 4)
+  assert.ok(body.teams.every((t: { status: string }) => t.status !== 'unavailable'))
+  assert.equal(body.roadBlocks.length, 3)
+>>>>>>> origin/main
 })

@@ -1,13 +1,21 @@
 'use client'
 
+<<<<<<< HEAD
 // Stage 5 - Live disaster map: the map is the page. Filters float in a dock, a case opens in a sheet.
+=======
+// Stage 5 - Live Disaster Map
+>>>>>>> origin/main
 import { useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import SiteHeader from '@/components/common/SiteHeader'
 import { DemoModeBanner, UpdatedDot } from '@/components/common/Badges'
+<<<<<<< HEAD
 import Icon from '@/components/ui/Icon'
 import MapFilters, { type MapFilterState } from '@/components/map/MapFilters'
 import IncidentSheet from '@/components/map/IncidentSheet'
+=======
+import MapFilters, { type MapFilterState } from '@/components/map/MapFilters'
+>>>>>>> origin/main
 import type { LayerToggles, MapFocus } from '@/components/map/DisasterMap'
 import { AREAS, DEFAULT_CENTER, PRIORITIES } from '@/lib/constants'
 import { api, usePolledReports } from '@/lib/client'
@@ -15,7 +23,11 @@ import type { BlockedRoad, RescueTeam, Shelter } from '@/lib/types'
 
 const DisasterMap = dynamic(() => import('@/components/map/DisasterMap'), {
   ssr: false,
+<<<<<<< HEAD
   loading: () => <div className="flex h-full items-center justify-center bg-sand-200 font-semibold text-ink-600">Loading map...</div>,
+=======
+  loading: () => <div className="flex h-full items-center justify-center bg-gray-100 text-gray-500">Loading map...</div>,
+>>>>>>> origin/main
 })
 
 export default function MapPage() {
@@ -23,11 +35,15 @@ export default function MapPage() {
   const [show, setShow] = useState<LayerToggles>({ reports: true, shelters: true, teams: true, roadBlocks: true })
   const [layers, setLayers] = useState<{ shelters: Shelter[]; teams: RescueTeam[]; roadBlocks: BlockedRoad[] }>({ shelters: [], teams: [], roadBlocks: [] })
   const [focus, setFocus] = useState<MapFocus>(null)
+<<<<<<< HEAD
   const [dockOpen, setDockOpen] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   // Open the dock by default on wide screens only.
   useEffect(() => setDockOpen(window.matchMedia('(min-width: 768px)').matches), [])
+=======
+  const [panelOpen, setPanelOpen] = useState(false)
+>>>>>>> origin/main
 
   const query = useMemo(
     () => ({
@@ -40,7 +56,10 @@ export default function MapPage() {
     [filters]
   )
   const { reports, summary, mode, error, lastUpdated } = usePolledReports(api.listReports, query)
+<<<<<<< HEAD
   const selected = reports.find((r) => r.id === selectedId) ?? null
+=======
+>>>>>>> origin/main
 
   useEffect(() => {
     const load = () => api.mapLayers(filters.area).then(setLayers).catch(() => {})
@@ -58,6 +77,7 @@ export default function MapPage() {
     <div className="page flex h-screen flex-col">
       <SiteHeader />
       <DemoModeBanner mode={mode} />
+<<<<<<< HEAD
       <main id="main" className="relative min-h-0 flex-1 p-3 pt-3 sm:px-5 sm:pb-5">
         <h1 className="sr-only">Live disaster map</h1>
         <div className="clay relative h-full overflow-hidden p-1.5" style={{ borderRadius: 32 }}>
@@ -110,6 +130,45 @@ export default function MapPage() {
           </div>
         </div>
       </main>
+=======
+      <div className="relative flex min-h-0 flex-1">
+        <aside
+          className={`absolute inset-y-0 left-0 z-[1000] w-72 overflow-y-auto border-r border-gray-200 bg-white p-4 shadow-lg transition-transform md:static md:translate-x-0 md:shadow-none ${
+            panelOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="mb-3 flex items-center justify-between">
+            <h1 className="text-lg font-bold">Live disaster map</h1>
+            <button className="text-gray-500 md:hidden" onClick={() => setPanelOpen(false)} aria-label="Close filters">✕</button>
+          </div>
+          <div className="mb-4 flex items-center justify-between">
+            <span className="text-sm text-gray-600">
+              <strong>{reports.length}</strong> {reports.length === 1 ? 'report' : 'reports'} shown
+            </span>
+            <UpdatedDot at={lastUpdated} error={error} />
+          </div>
+          {error && <p className="mb-3 rounded bg-red-50 p-2 text-xs text-red-700">{error.message}</p>}
+          <MapFilters
+            filters={filters}
+            setFilters={setFilters}
+            show={show}
+            setShow={setShow}
+            summary={summary}
+            layerCounts={{ shelters: layers.shelters.length, teams: layers.teams.length, roadBlocks: layers.roadBlocks.length }}
+          />
+          <button className="btn-ghost mt-4 w-full" onClick={() => setFocus({ fit: true, at: Date.now() })} disabled={!reports.length}>
+            Zoom to shown reports
+          </button>
+        </aside>
+
+        <div className="relative flex-1">
+          <button className="btn-primary absolute left-3 top-3 z-[999] shadow md:hidden" onClick={() => setPanelOpen(true)}>
+            Filters
+          </button>
+          <DisasterMap center={DEFAULT_CENTER} reports={reports} layers={layers} show={show} focus={focus} />
+        </div>
+      </div>
+>>>>>>> origin/main
     </div>
   )
 }

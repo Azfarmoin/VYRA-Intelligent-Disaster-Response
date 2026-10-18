@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # VYRA Project Plan
+=======
+# ResQNet Project Plan
+>>>>>>> origin/main
 
 ## Stage 1: Project Scope and Features
 

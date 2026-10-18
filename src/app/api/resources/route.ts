@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
 import { RESOURCE_TYPES } from '@/lib/matching'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 // GET all resources
 export async function GET(request: NextRequest) {
@@ -29,6 +33,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'resource_type is required' }, { status: 400 })
     }
 
+<<<<<<< HEAD
     if (!RESOURCE_TYPES.some(t => t.value === body.resource_type)) {
       return NextResponse.json({ error: `Unknown resource type: ${body.resource_type}` }, { status: 400 })
     }
@@ -37,12 +42,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'quantity must be a whole number of 1 or more' }, { status: 400 })
     }
 
+=======
+>>>>>>> origin/main
     const { data, error } = await supabase
       .from('resources')
       .insert({
         resource_type: body.resource_type,
         name: body.name || null,
+<<<<<<< HEAD
         quantity,
+=======
+        quantity: body.quantity || 1,
+>>>>>>> origin/main
         notes: body.notes || null,
         team_id: body.team_id || null,
         status: 'available'

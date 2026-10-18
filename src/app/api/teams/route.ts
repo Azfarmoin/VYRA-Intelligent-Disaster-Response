@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { supabase } from '@/lib/serverDb'
+=======
+import { supabase } from '@/lib/supabase'
+>>>>>>> origin/main
 
 // GET all teams
 export async function GET(request: NextRequest) {
@@ -35,10 +39,17 @@ export async function POST(request: NextRequest) {
         team_leader: body.team_leader,
         contact_number: body.contact_number,
         capabilities: body.capabilities || [],
+<<<<<<< HEAD
         current_location_lat: body.current_location_lat ?? null,
         current_location_lng: body.current_location_lng ?? null,
         base_location: body.base_location || null,
         team_size: Number.isInteger(body.team_size) && body.team_size > 0 ? body.team_size : 4,
+=======
+        current_location_lat: body.current_location_lat || null,
+        current_location_lng: body.current_location_lng || null,
+        base_location: body.base_location || null,
+        team_size: body.team_size || 4,
+>>>>>>> origin/main
         status: 'available'
       })
       .select()

@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import type { Metadata, Viewport } from "next"
 import { Fraunces, Hanken_Grotesk } from "next/font/google"
+=======
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+>>>>>>> origin/main
 import "leaflet/dist/leaflet.css"
 import "./globals.css"
 import SyncStatus from "@/components/SyncStatus"
 
+<<<<<<< HEAD
 const display = Fraunces({ subsets: ["latin"], variable: "--font-display", display: "swap", axes: ["SOFT", "opsz"] })
 const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" })
 
@@ -20,6 +26,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="font-sans antialiased">
         <a href="#main" className="skip-link">Skip to content</a>
+=======
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata: Metadata = {
+  title: "ResQNet - Intelligent Disaster Response",
+  description: "Finding Who Needs Help Most",
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+>>>>>>> origin/main
         {children}
         <SyncStatus />
       </body>

@@ -1,16 +1,28 @@
 'use client'
 
+<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from 'react'
+=======
+import { useMemo, useState } from 'react'
+>>>>>>> origin/main
 import dynamic from 'next/dynamic'
 import ChoiceGroup from './ChoiceGroup'
 import type { PickedLocation } from './LocationPicker'
 import { AREAS, DANGERS, EVACUATION_ABILITY, INJURY_SEVERITIES, MEDICAL_NEEDS, VULNERABILITIES } from '@/lib/constants'
+<<<<<<< HEAD
 import { api, ApiError, labelList, type PublicReport } from '@/lib/client'
 import Icon from '@/components/ui/Icon'
 
 const LocationPicker = dynamic(() => import('./LocationPicker'), {
   ssr: false,
   loading: () => <div className="clay-inset h-64 animate-pulse" />,
+=======
+import { api, ApiError, type PublicReport } from '@/lib/client'
+
+const LocationPicker = dynamic(() => import('./LocationPicker'), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse rounded-lg bg-gray-100" />,
+>>>>>>> origin/main
 })
 
 const newClientId = () =>
@@ -63,6 +75,21 @@ export function toPayload(f: FormState, clientId: string, reporterId: string | n
   }
 }
 
+<<<<<<< HEAD
+=======
+function Section({ step, title, hint, children }: { step: number; title: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <section className="card p-4 sm:p-5">
+      <h2 className="flex items-baseline gap-2 text-base font-semibold">
+        <span className="text-primary-600">{step}.</span> {title}
+      </h2>
+      {hint && <p className="mb-3 mt-0.5 text-sm text-gray-500">{hint}</p>}
+      <div className={hint ? '' : 'mt-3'}>{children}</div>
+    </section>
+  )
+}
+
+>>>>>>> origin/main
 async function currentUserId(): Promise<string | null> {
   try {
     const { supabase } = await import('@/lib/supabase')
@@ -73,6 +100,7 @@ async function currentUserId(): Promise<string | null> {
   }
 }
 
+<<<<<<< HEAD
 const STEPS = [
   { key: 'location', short: 'Location', title: 'Where is help needed?' },
   { key: 'situation', short: 'Situation', title: 'What is happening?' },
@@ -132,11 +160,19 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
   const [savedAt, setSavedAt] = useState<number | null>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const firstRender = useRef(true)
+=======
+export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicReport) => void }) {
+  const [form, setForm] = useState<FormState>(EMPTY)
+  const [clientId] = useState(newClientId) // same id on every retry -> no duplicate reports
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<{ message: string; details?: { path: string; message: string }[] } | null>(null)
+>>>>>>> origin/main
 
   const set = <K extends keyof FormState>(field: K) => (value: FormState[K]) => setForm((f) => ({ ...f, [field]: value }))
   const setText = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [field]: e.target.value }))
   const injured = form.injurySeverity && !['none', 'unknown'].includes(form.injurySeverity)
+<<<<<<< HEAD
   const last = STEPS.length - 1
 
   // Restore an unsent draft kept on this device.
@@ -175,6 +211,8 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
     headingRef.current?.focus()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [step])
+=======
+>>>>>>> origin/main
 
   const unanswered = useMemo(() => {
     const list: string[] = []
@@ -185,6 +223,7 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
     return list
   }, [form])
 
+<<<<<<< HEAD
   const goTo = (n: number) => {
     setStep(n)
     setReached((r) => Math.max(r, n))
@@ -214,19 +253,33 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
     if (!form.location) {
       setError({ message: 'Add your location before sending. Go back to step 1 and use your current location or tap the map.' })
       goTo(0)
+=======
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.location) {
+      setError({ message: 'Please share your location or tap the map to mark where help is needed.' })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+>>>>>>> origin/main
       return
     }
     setSubmitting(true)
     setError(null)
     try {
       const { report } = await api.createReport(toPayload(form, clientId, await currentUserId()))
+<<<<<<< HEAD
       writeDraft(null)
+=======
+>>>>>>> origin/main
       onSubmitted(report)
     } catch (err) {
       setError(
         err instanceof ApiError
           ? { message: err.message, details: err.details }
+<<<<<<< HEAD
           : { message: 'Could not send the report. Check your connection and press Send again. Your answers are kept on this device.' }
+=======
+          : { message: 'Could not send the report. Check your connection and press Send again - your answers are kept.' }
+>>>>>>> origin/main
       )
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } finally {
@@ -234,6 +287,7 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
     }
   }
 
+<<<<<<< HEAD
   const current = STEPS[step]
 
   return (
@@ -470,6 +524,107 @@ export default function ReportForm({ onSubmitted }: { onSubmitted: (r: PublicRep
               : 'Your answers are kept on this device as you type. Nothing is sent until you press Send.'}
           </p>
         </div>
+=======
+  return (
+    <form onSubmit={submit} className="space-y-4" noValidate>
+      {error && (
+        <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800" role="alert">
+          <p className="font-medium">{error.message}</p>
+          {!!error.details?.length && (
+            <ul className="mt-1 list-disc pl-5">
+              {error.details.map((d) => (
+                <li key={d.path + d.message}>
+                  {d.path}: {d.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      <Section step={1} title="Where is help needed?" hint="Required. GPS is most accurate; you can also mark the spot on the map.">
+        <LocationPicker value={form.location} onChange={set('location')} />
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label className="label" htmlFor="locationAddress">Landmark or address (optional)</label>
+            <input id="locationAddress" className="input" maxLength={300} value={form.locationAddress} onChange={setText('locationAddress')} placeholder="e.g. behind the market, blue gate" />
+          </div>
+          <div>
+            <label className="label" htmlFor="area">Area (optional)</label>
+            <select id="area" className="input" value={form.area} onChange={setText('area')}>
+              <option value="">Detect from location</option>
+              {AREAS.map((a) => (
+                <option key={a.name} value={a.name}>{a.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </Section>
+
+      <Section step={2} title="Is anyone in immediate danger?" hint="Select everything that applies.">
+        <ChoiceGroup multiple options={DANGERS} value={form.dangers} onChange={set('dangers')} exclusive={['none']} />
+        <label className="label mt-3" htmlFor="dangerDetails">Describe the situation (optional)</label>
+        <textarea id="dangerDetails" rows={2} maxLength={1000} className="input" value={form.dangerDetails} onChange={setText('dangerDetails')} placeholder="e.g. water rising, family on the roof" />
+      </Section>
+
+      <Section step={3} title="How many people need help?">
+        <div className="flex flex-wrap items-center gap-3">
+          <input type="number" min={1} max={10000} inputMode="numeric" className="input w-32" value={form.peopleCount} onChange={setText('peopleCount')} placeholder="Number" aria-label="Number of people" />
+          <span className="text-sm text-gray-500">Leave empty if you are not sure.</span>
+        </div>
+      </Section>
+
+      <Section step={4} title="Are there injuries?">
+        <ChoiceGroup options={INJURY_SEVERITIES} value={form.injurySeverity} onChange={set('injurySeverity')} />
+        {injured && (
+          <div className="mt-3 grid gap-3 sm:grid-cols-[8rem_1fr]">
+            <div>
+              <label className="label" htmlFor="injuryCount">How many?</label>
+              <input id="injuryCount" type="number" min={1} inputMode="numeric" className="input" value={form.injuryCount} onChange={setText('injuryCount')} />
+            </div>
+            <div>
+              <label className="label" htmlFor="injuryDetails">Injury details</label>
+              <input id="injuryDetails" className="input" maxLength={1000} value={form.injuryDetails} onChange={setText('injuryDetails')} placeholder="e.g. broken leg, heavy bleeding" />
+            </div>
+          </div>
+        )}
+      </Section>
+
+      <Section step={5} title="Medical needs" hint="Essential medication, equipment or conditions responders should know about.">
+        <ChoiceGroup multiple options={MEDICAL_NEEDS} value={form.medicalNeedTypes} onChange={set('medicalNeedTypes')} />
+        <label className="label mt-3" htmlFor="medicalNeeds">Details (optional)</label>
+        <input id="medicalNeeds" className="input" maxLength={1000} value={form.medicalNeeds} onChange={setText('medicalNeeds')} placeholder="e.g. insulin runs out tonight" />
+      </Section>
+
+      <Section step={6} title="Can everyone leave safely on their own?">
+        <ChoiceGroup columns={3} options={EVACUATION_ABILITY} value={form.canEvacuate} onChange={set('canEvacuate')} />
+        <p className="label mt-4">Is anyone here who may need extra help?</p>
+        <ChoiceGroup multiple options={VULNERABILITIES} value={form.vulnerabilities} onChange={set('vulnerabilities')} />
+      </Section>
+
+      <Section step={7} title="Contact (optional)" hint="Only for responders, so they can call back.">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div>
+            <label className="label" htmlFor="contactName">Name</label>
+            <input id="contactName" className="input" maxLength={120} autoComplete="name" value={form.contactName} onChange={setText('contactName')} />
+          </div>
+          <div>
+            <label className="label" htmlFor="contactPhone">Phone</label>
+            <input id="contactPhone" type="tel" className="input" maxLength={40} autoComplete="tel" value={form.contactPhone} onChange={setText('contactPhone')} placeholder="+92 ..." />
+          </div>
+        </div>
+      </Section>
+
+      <div className="sticky bottom-0 -mx-4 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0">
+        {unanswered.length > 0 && form.location && (
+          <p className="mb-2 text-xs text-gray-500">
+            Not answered: {unanswered.join(', ')}. You can still send - responders will treat it as unknown, not as safe.
+          </p>
+        )}
+        <button type="submit" className="btn-danger w-full py-3 text-base" disabled={submitting}>
+          {submitting ? 'Sending...' : 'Send emergency report'}
+        </button>
+>>>>>>> origin/main
       </div>
     </form>
   )
